@@ -26,24 +26,9 @@ $(document).ready(function() {
 
   updateCard();
 
-  $("#next").click(function() {
-    if (index < shuffled.length - 1) {
-      index++;
-      updateCard();
-    }
-  });
-
-  $("#prev").click(function() {
-    if (index > 0) {
-      index--;
-      updateCard();
-    }
-  });
-
-  $("#check, #word-card").click(function() {
+  function checkAnswer() {
     const userAnswer = $("#answer").val().trim().toLowerCase();
     const correctAnswer = shuffled[index].ua;
-
     if (userAnswer === correctAnswer) {
       correct++;
       $("#correct").text(correct);
@@ -58,6 +43,10 @@ $(document).ready(function() {
       index++;
       updateCard();
     }
+  }
+
+  $("#check").click(function() {
+    checkAnswer();
   });
 
   function showResult() {
@@ -65,10 +54,10 @@ $(document).ready(function() {
     const percent = Math.round((correct / total) * 100);
     let level;
 
-    if (percent === 0) level = "Тобі слід повчити англійську та спробувати ще раз!"
+    if (percent === 0) level = "Тобі слід повчити англійську та спробувати ще раз!";
     else if (percent >= 90) level = "Високий рівень знань. Відмінний результат!";
     else if (percent >= 60) level = "Середній рівень знань. Молодець!";
-    else level = "Початковий рівень знань. Не засмучуйся у тебе ще все попереду!";
+    else level = "Початковий рівень знань. Не засмучуйся, у тебе ще все попереду!";
 
     $("#result-text").html(`Твій результат: ${percent}%<br>${level}`);
     $("#modal").fadeIn();
